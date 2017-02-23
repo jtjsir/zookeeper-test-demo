@@ -1,0 +1,246 @@
+<?xml version = "1.0" encoding="UTF-8" standalone = "no"?>
+<connections>
+	<!-- 股票行情请求连接 name：不可随意修改 -->
+	<connection name="stock_quote" class="com.hundsun.quote.net.QuoteConnManager"
+		count="10" maxCount="30" create="true" timeout="5000" enable="true">
+<!-- 		<unit serverAddress="192.168.71.65" serverPort="8051" user="test" -->
+<!-- 			password="test"> -->
+<!-- 		</unit> -->
+		<unit serverAddress="112.124.211.83" serverPort="443" user="test"
+			password="test">
+		</unit>
+	</connection>
+	
+	<!-- 股票行情level2请求连接 name：不可随意修改 -->
+	<connection name="stock_quote" class="com.hundsun.quote.net.LevelQuoteConnManager"
+		count="10" maxCount="30" create="true" timeout="5000" enable="true">
+		<unit serverAddress="10.20.18.155" serverPort="19999" user=""
+			password=""
+		></unit>
+	</connection>
+
+	<!-- 期货行情请求连接 name：不可随意修改 -->
+	<connection name="futures_quote" class="com.hundsun.quote.net.FuturesConnManager"
+		count="10" maxCount="30" create="true" timeout="3000" enable="false">
+<!-- 		<unit serverAddress="192.168.71.65" serverPort="8051" user="test" -->
+<!-- 			password="test"> -->
+<!-- 		</unit> -->
+		<unit serverAddress="112.124.211.83" serverPort="443" user="test"
+			password="test">
+		</unit>
+	</connection>
+
+	<!-- 港股行情请求连接 name：不可随意修改 -->
+	<connection name="hkmarket_quote" class="com.hundsun.quote.net.HKConnManager"
+		count="10" maxCount="30" create="true" timeout="3000" enable="false">
+		<unit serverAddress="192.168.71.48" serverPort="9299" user="test"
+			password="test">
+		</unit>
+	</connection>
+	
+	<!-- 文化品行情请求连接 name：不可随意修改 -->
+	<connection name="quote_cultural" class="com.hundsun.quote.net.CulturalConnManager"
+		count="10" maxCount="30" create="true" timeout="30000" enable="false">
+<!-- 		<unit serverAddress="202.68.195.120" serverPort="9999" user="test" -->
+<!-- 			password="test"> -->
+<!-- 		</unit> -->
+		<unit serverAddress="112.124.211.201" serverPort="9999" user="test"
+			password="test">
+		</unit>
+	</connection>
+
+	<connection name="quote_wp_futures"
+		class="com.hundsun.quote.net.WPFuturesConnManager" count="10" maxCount="30"
+		create="true" timeout="5000" enable="false">
+		<unit serverAddress="202.104.123.8" serverPort="9001" user="test" password="test">
+		</unit>
+	</connection>
+	
+	<connection name="quote_forex"
+		class="com.hundsun.quote.net.ForexConnManager" count="10" maxCount="30"
+		create="true" timeout="5000" enable="false">
+		<unit serverAddress="202.104.123.8" serverPort="9001" user="test" password="test">
+		</unit>
+	</connection>
+	
+	<connection name="quote_wp" class="com.hundsun.quote.net.WPConnManager"
+		count="10" maxCount="30" create="true" timeout="5000" enable="false">
+		<unit serverAddress="202.104.123.8" serverPort="9001" user="test" password="test">
+		</unit>
+	</connection>
+	
+	<connection name="quote_spots" class="com.hundsun.quote.net.SpotConnManager"
+		count="1" maxCount="30" create="true" timeout="5000" enable="true">		
+		<!-- 碳交所行情服务器 -->
+		<unit serverAddress="221.232.145.62" serverPort="9999" user="test" password="test"></unit>
+		<!--黄金交易所 -->
+<!-- 		<unit serverAddress="10.253.18.207" serverPort="9999" user="test" password="test"></unit>  -->
+	</connection>
+	
+	<!-- 期权行情请求连接-->
+	<connection name="option_quote" class="com.hundsun.quote.net.OptionQuoteConnManager"
+		count="10" maxCount="30" crate="true" timeout="5000" enable="false">
+		<unit serverAddress="192.168.71.48" serverPort="9599" user="test"
+			password="test">
+		</unit>
+	</connection>
+
+	<!-- 股票交易连接 -->
+	<connection name="trade_secu_default" class="com.hundsun.winner.jr.net.JrConnManager"
+		count="10" maxCount="50" create="true" timeout="30000" ssl="false"
+		enable="true">
+		<unit serverAddress="192.168.74.45" serverPort="6002" keypwd="111111" key="/cli.p12">
+		</unit>
+	</connection>
+
+	<!-- 期货交易连接 -->
+	<connection name="trade_futures_default" class="com.hundsun.winner.jr.net.JrConnManager"
+		count="10" maxCount="50" create="true" timeout="10000" ssl="false"
+		enable="false">
+		<unit serverAddress="192.168.71.67" serverPort="2510" keypwd="111111"
+			key="/cli.p12">
+		</unit>
+	</connection>
+
+	<!-- 融资融券交易连接 -->
+	<connection name="trade_margin_default" class="com.hundsun.winner.jr.net.JrConnManager"
+		count="10" maxCount="30" create="true" timeout="10000" ssl="false"
+		enable="false">
+		<unit serverAddress="192.168.74.45" serverPort="6001" keypwd="111111"
+			key="/cli.p12">
+		</unit>
+	</connection>
+	
+	<!-- OTC交易连接 -->
+	<connection name="trade_otc_default" class="com.hundsun.winner.jr.net.JrConnManager"
+		count="10" maxCount="30" create="true" timeout="10000" ssl="false"
+		enable="false">
+		<unit serverAddress="192.168.74.45" serverPort="6001" keypwd="111111"
+			key="/cli.p12">
+		</unit>
+	</connection>
+	
+	<!-- 现货交易连接 -->
+	<connection name="trade_spots_default" class="com.hundsun.winner.jr.net.JrConnManager"
+		count="10" maxCount="50" create="true" timeout="10000" ssl="false"
+		enable="false">
+		<unit serverAddress="192.168.54.230" serverPort="2500" keypwd="111111"
+			key="/cli.p12">
+		</unit>
+	</connection>
+
+	<!-- AR 连接 资讯AR -->
+	<connection name="info_channel" class="com.hundsun.ar.net.ARConnManager"
+		count="10" maxCount="50" create="true" timeout="3000" enable="true">
+		<!--unit serverAddress="192.168.87.169" serverPort="9005">
+		<unit serverAddress="192.168.51.235" serverPort="9000">
+		</unit-->
+		<unit serverAddress="192.168.51.235" serverPort="9000">
+		</unit>
+	</connection>
+
+	<!-- AR 连接 客户管理平台 -->
+	<connection name="customer_channel" class="com.hundsun.ar.net.ARConnManager"
+		count="10" maxCount="50" create="true" timeout="3000" enable="true">
+		<!--unit serverAddress="192.168.87.169" serverPort="9005"-->
+		<unit serverAddress="192.168.51.235" serverPort="9000">
+		<!--unit serverAddress="222.247.45.141" serverPort="5560"-->
+		</unit>
+	</connection>
+
+
+	<!-- 统一认证服务 若没必要请在属性enable中写入false -->
+	<connection name="authentication_channel" class="com.hundsun.ar.net.ARConnManager"
+		count="1" maxCount="1" create="true" timeout="1000" enable="false">
+		<unit serverAddress="192.168.71.27" serverPort="9000"></unit>
+	</connection>
+
+	<connection name="info_jr" class="com.hundsun.winner.ti.net.TIConnManager"
+		count="1" maxCount="1" timeout="5000" connInterval="2000" enable="false"
+		conTimeOut="5000">
+		<unit serverAddress="192.168.71.27" serverPort="2312">
+		</unit>
+	</connection>
+	
+	<market name="quote_cultural"> 
+		<!-- 湖南邮币卡行情请求连接 name：不可随意修改 -->
+    	<connection name="quote_cultural_hn" marketType="0x3110" class="com.hundsun.quote.net.CulturalConnManager"
+          	count="5" maxCount="10" create="true" timeout="3000" enable="false">
+          	<unit serverAddress="113.106.95.85" serverPort="9999" user="test"
+                   	password="test">
+          	</unit>
+    	</connection>
+
+		<!-- 海西邮币卡文化品行情请求连接 name：不可随意修改 -->
+        <connection name="quote_cultural_hx" marketType="0x3120" class="com.hundsun.quote.net.CulturalConnManager"
+                 count="5" maxCount="10" create="true" timeout="3000" enable="false">
+                 <unit serverAddress="117.78.6.74" serverPort="9999" user="test"
+                       password="test">
+                 </unit>
+        </connection>
+		<!-- 内蒙古文化产权交易所文化品行情请求连接 name：不可随意修改 -->
+        <connection name="quote_cultural_nm" marketType="0x3130" class="com.hundsun.quote.net.CulturalConnManager"
+                 count="5" maxCount="10" create="true" timeout="3000" enable="false">
+                 <unit serverAddress="121.43.73.201" serverPort="9999" user="test"
+                       password="test">
+                 </unit>
+        </connection>
+		<!-- 上海文化产权交易所文化品行情请求连接 name：不可随意修改 -->
+        <connection name="quote_cultural_shjq" marketType="0x3140" class="com.hundsun.quote.net.CulturalConnManager"
+                 count="5" maxCount="10" create="true" timeout="3000" enable="false">
+                 <unit serverAddress="140.207.216.202" serverPort="9999" user="test"
+                       password="test">
+                 </unit>
+        </connection>
+		<!-- 上海邮币卡交易中心文化品行情请求连接 name：不可随意修改 -->
+        <connection name="quote_cultural_sh" marketType="0x3150" class="com.hundsun.quote.net.CulturalConnManager"
+                 count="5" maxCount="10" create="true" timeout="3000" enable="false">
+                 <unit serverAddress="101.226.171.217" serverPort="9999" user="test"
+                       password="test">
+                 </unit>
+        </connection>
+		<!-- 青岛九州商品交易中心文化品行情请求连接 name：不可随意修改 -->
+        <connection name="quote_cultural_qdjz" marketType="0x3160" class="com.hundsun.quote.net.CulturalConnManager"
+                 count="5" maxCount="10" create="true" timeout="3000" enable="false">
+                 <unit serverAddress="27.221.58.10" serverPort="9999" user="test"
+                       password="test">
+                 </unit>
+        </connection>
+		<!-- 哈尔滨文化产权交易所文化品行情请求连接 name：不可随意修改 -->
+        <connection name="quote_cultural_hrb" marketType="0x3170" class="com.hundsun.quote.net.CulturalConnManager"
+                 count="5" maxCount="10" create="true" timeout="3000" enable="false">
+                 <unit serverAddress="117.78.0.20" serverPort="9999" user="test"
+                       password="test">
+                 </unit>
+        </connection>
+		<!-- 北京东方雍和国际版权交易中心文化品行情请求连接 name：不可随意修改 -->
+        <connection name="quote_cultural_bjdfyh" marketType="0x3180" class="com.hundsun.quote.net.CulturalConnManager"
+                 count="5" maxCount="10" create="true" timeout="3000" enable="false">
+                 <unit serverAddress="58.83.213.164" serverPort="9999" user="test"
+                       password="test">
+                 </unit>
+        </connection>
+		<!-- 汉唐艺术品交易所文化品行情请求连接 name：不可随意修改 -->
+        <connection name="quote_cultural_ytys" marketType="0x3190" class="com.hundsun.quote.net.CulturalConnManager"
+                 count="5" maxCount="10" create="true" timeout="3000" enable="false">
+                 <unit serverAddress="114.112.96.84" serverPort="9999" user="test"
+                       password="test">
+                 </unit>
+        </connection>
+		<!-- 湖南文化艺术品产权交易所文化品行情请求连接 name：不可随意修改
+        <connection name="quote_cultural_hnwh" marketType="0x3200" class="com.hundsun.quote.net.CulturalConnManager"
+                 count="5" maxCount="10" create="true" timeout="3000" enable="true">
+                 <unit serverAddress="113.106.95.85" serverPort="9999" user="test"
+                       password="test">
+                 </unit>
+        </connection>
+		 -->	
+		<!-- 上海创怿嘉文化品行情请求连接 name：不可随意修改 -->
+        <connection name="quote_cultural_hnwh" marketType="0x3210" class="com.hundsun.quote.net.CulturalConnManager"
+                 count="5" maxCount="10" create="true" timeout="3000" enable="false">
+                 <unit serverAddress="117.78.37.249" serverPort="9999" user="test"
+                       password="test">
+                 </unit>
+        </connection>		
+	</market> 
+</connections>
