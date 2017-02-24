@@ -7,6 +7,7 @@ import org.apache.zookeeper.ZooDefs.Ids;
 import org.apache.zookeeper.data.Stat;
 
 import com.jing.zookeeper.data.watcher.DataExsitWatcher;
+import com.jing.zookeeper.path.PathVarConst;
 import com.jing.zookeeper.util.ProConfigUtil;
 
 /**
@@ -26,19 +27,20 @@ public class MonitorAgentRun implements Runnable {
 	public void run() {
 		try {
 			// 判断根节点是否存在
-			Stat stat = client.getZooKeeper().exists("/root", new DataExsitWatcher());
+			Stat stat = client.getZooKeeper().exists(PathVarConst.ROOT_PATH, new DataExsitWatcher());
 			if (stat == null) {
-				client.getZooKeeper().create("/root", "root".getBytes(), Ids.OPEN_ACL_UNSAFE, CreateMode.PERSISTENT);
-				client.getZooKeeper().create("/root/config", "config".getBytes(), Ids.OPEN_ACL_UNSAFE,
+				client.getZooKeeper().create(PathVarConst.ROOT_PATH, "root".getBytes(), Ids.OPEN_ACL_UNSAFE,
+						CreateMode.PERSISTENT);
+				client.getZooKeeper().create(PathVarConst.ROOTCONF_PATH, "config".getBytes(), Ids.OPEN_ACL_UNSAFE,
 						CreateMode.PERSISTENT);
 			} else {
 				String quoteconfData = ProConfigUtil.readPro("com/jing/zookeeper/resource/quote_conf.properties")
 						.toString();
-				client.getZooKeeper().create("/root/config/quote_conf", quoteconfData.getBytes(), Ids.OPEN_ACL_UNSAFE,
+				client.getZooKeeper().create(PathVarConst.QUOTECONF_PATH, quoteconfData.getBytes(), Ids.OPEN_ACL_UNSAFE,
 						CreateMode.EPHEMERAL);
 
 				// test
-				testCommand(client, "/root/config/quote_conf");
+				testCommand(client, PathVarConst.QUOTECONF_PATH);
 
 			}
 		} catch (Exception e) {
