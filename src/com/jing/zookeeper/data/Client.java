@@ -6,9 +6,14 @@ import java.util.Properties;
 
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
+import org.apache.zookeeper.CreateMode;
 import org.apache.zookeeper.ZooKeeper;
+import org.apache.zookeeper.ZooDefs.Ids;
+import org.apache.zookeeper.data.Stat;
 
+import com.jing.zookeeper.data.watcher.DataExsitWatcher;
 import com.jing.zookeeper.data.watcher.DefaultDataWatcher;
+import com.jing.zookeeper.path.PathVarConst;
 
 /**
  * @author jingsir
@@ -33,11 +38,21 @@ public class Client {
 		init();
 	}
 
+	/**
+	 * 建立zk连接，并初始化root和config节点
+	 */
 	private void init() {
 		loadLocalProperties();
 		try {
 			this.zooKeeper = new ZooKeeper(address, 1000000, new DefaultDataWatcher());
-		} catch (IOException e) {
+			Stat stat = this.zooKeeper.exists(PathVarConst.ROOT_PATH, new DataExsitWatcher());
+			if (stat == null) {
+				this.zooKeeper.create(PathVarConst.ROOT_PATH, "root".getBytes(), Ids.OPEN_ACL_UNSAFE,
+						CreateMode.PERSISTENT);
+				this.zooKeeper.create(PathVarConst.ROOTCONF_PATH, "config".getBytes(), Ids.OPEN_ACL_UNSAFE,
+						CreateMode.PERSISTENT);
+			}
+		} catch (Exception e) {
 			LOGGER.error("zookeeper连接配置出错，请检查配置文件", e);
 		}
 	}
