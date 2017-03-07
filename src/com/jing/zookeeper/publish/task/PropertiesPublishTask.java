@@ -5,6 +5,7 @@ import java.util.Properties;
 import java.util.Set;
 
 import com.jing.zookeeper.data.Client;
+import com.jing.zookeeper.publish.util.ZkNodeUtil;
 
 /**
  * @author jingsir
@@ -57,7 +58,7 @@ public class PropertiesPublishTask extends AbsPublishTask {
 				proPath = pros.getKey();
 				oneProKeys = pros.getValue().keySet();
 				for (Object proKey : oneProKeys) {
-					super.createZnode(zkClient, proPath + "/" + (String) proKey,
+					ZkNodeUtil.createZnode(zkClient, proPath + "/" + (String) proKey,
 							pros.getValue().getProperty((String) proKey));
 				}
 			}

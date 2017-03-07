@@ -20,6 +20,7 @@ import com.jing.zookeeper.publish.task.AllUnPublishTask;
 import com.jing.zookeeper.publish.task.DefaultPublishTask;
 import com.jing.zookeeper.publish.task.PropertiesPublishTask;
 import com.jing.zookeeper.publish.task.XmlPublishTask;
+import com.jing.zookeeper.publish.util.ZkNodeUtil;
 
 /**
  * @author jingsir
@@ -31,15 +32,15 @@ public class PublishManager {
 	private static final Logger MANAGERLOGGER = LogManager.getLogger(PublishManager.class);
 
 	// properties文件存储集合
-	private static HashMap<String, Properties> propertiesMap = new HashMap<>();
+	private HashMap<String, Properties> propertiesMap = new HashMap<>();
 
 	// xml文件存储集合
-	private static HashMap<String, Document> xmlsMap = new HashMap<>();
+	private HashMap<String, Document> xmlsMap = new HashMap<>();
 
 	// 普通文件存储集合
-	private static HashMap<String, String> defaultMap = new HashMap<>();
+	private HashMap<String, String> defaultMap = new HashMap<>();
 
-	// 目录节点集合
+	// 目录树节点集合
 	public static Set<String> directorySet = new HashSet<String>();
 
 	private static PublishManager instance;
@@ -74,12 +75,23 @@ public class PublishManager {
 
 	/**
 	 * 发布接口
+	 * 
+	 * @param client
+	 *            zookeeper对象
 	 */
 	public void publish(Client zkClient) {
 		// 启动三个Task类来进行将配置文件部署在zk上
 		new DefaultPublishTask(defaultMap).publish(zkClient);
 		new XmlPublishTask(xmlsMap).publish(zkClient);
 		new PropertiesPublishTask(propertiesMap).publish(zkClient);
+
+		// 获取目录节点集合
+		try {
+			ZkNodeUtil.getAllNodesFromZK(zkClient, PathVarConst.ROOTCONF_PATH);
+		} catch (Exception e) {
+			MANAGERLOGGER.error("获取全目录节点集合失败", e);
+			e.printStackTrace();
+		}
 	}
 
 	/**
@@ -101,7 +113,7 @@ public class PublishManager {
 	 * @param dirName
 	 *            目录名
 	 */
-	private static void parseDir(File confDir, String dirName) {
+	private void parseDir(File confDir, String dirName) {
 		File[] confFiles = confDir.listFiles();
 		for (File conf : confFiles) {
 			if (conf.isDirectory()) {
@@ -120,7 +132,7 @@ public class PublishManager {
 	 * @param zkPath
 	 *            对应的znode路径
 	 */
-	private static void parseFile(File confFile, String zkPath) {
+	private void parseFile(File confFile, String zkPath) {
 		StringBuilder keyPath = new StringBuilder();
 		int keywordIndex = 0;
 		try {
@@ -159,4 +171,29 @@ public class PublishManager {
 			MANAGERLOGGER.error(e.getMessage(), e);
 		}
 	}
+
+	public HashMap<String, Properties> getPropertiesMap() {
+		return propertiesMap;
+	}
+
+	public void setPropertiesMap(HashMap<String, Properties> propertiesMap) {
+		this.propertiesMap = propertiesMap;
+	}
+
+	public HashMap<String, Document> getXmlsMap() {
+		return xmlsMap;
+	}
+
+	public void setXmlsMap(HashMap<String, Document> xmlsMap) {
+		this.xmlsMap = xmlsMap;
+	}
+
+	public HashMap<String, String> getDefaultMap() {
+		return defaultMap;
+	}
+
+	public void setDefaultMap(HashMap<String, String> defaultMap) {
+		this.defaultMap = defaultMap;
+	}
+
 }

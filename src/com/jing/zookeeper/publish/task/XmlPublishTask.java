@@ -8,6 +8,7 @@ import org.dom4j.Document;
 import org.dom4j.Element;
 
 import com.jing.zookeeper.data.Client;
+import com.jing.zookeeper.publish.util.ZkNodeUtil;
 
 /**
  * @author jingsir
@@ -72,7 +73,7 @@ public class XmlPublishTask extends AbsPublishTask {
 					for (Element param : paramList) {
 						String paramKey = param.attributeValue("name");
 						String content = param.getTextTrim();
-						super.createZnode(zkClient, zkPath + "/" + paramName + "/" + paramKey, content);
+						ZkNodeUtil.createZnode(zkClient, zkPath + "/" + paramName + "/" + paramKey, content);
 					}
 
 				}

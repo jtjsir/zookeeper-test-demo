@@ -4,6 +4,7 @@ import java.util.Collections;
 import java.util.Map;
 import java.util.Set;
 import com.jing.zookeeper.data.Client;
+import com.jing.zookeeper.publish.util.ZkNodeUtil;
 
 /**
  * @author jingsir
@@ -27,7 +28,7 @@ public class DefaultPublishTask extends AbsPublishTask {
 			for (Map.Entry<String, String> normalFile : defaultEntries) {
 				zkPath = normalFile.getKey();
 				normalValue = normalFile.getValue();
-				super.createZnode(zkClient, zkPath, normalValue);
+				ZkNodeUtil.createZnode(zkClient, zkPath, normalValue);
 			}
 
 		} catch (Exception e) {
