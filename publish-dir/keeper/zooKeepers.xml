@@ -1,15 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <root>
-	<params name="tigerKeeper">
-		<param name="keeperName">Tianjun</param>
+	<params name="tigerKeepers">
+		<param name="keeperName1">Tianjun</param>
+		<param name="keeperName2">Wentian</param>
 	</params>
-	<params name="tigerKeeper">
-		<param name="keeperName">Wentian</param>
-	</params>
-	<params name="monkeyKeeper">
-		<param name="keeperName">Feng</param>
-	</params>
-	<params name="monkeyKeeper">
-		<param name="keeperName">Jun</param>
+	<params name="monkeyKeepers">
+		<param name="keeperName1">Feng</param>
+		<param name="keeperName2">Jun</param>
 	</params>
 </root>

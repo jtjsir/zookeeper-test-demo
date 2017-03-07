@@ -1,5 +1,7 @@
 package com.jing.zookeeper.publish.task;
 
+import java.util.List;
+
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 import org.apache.zookeeper.CreateMode;
@@ -28,7 +30,7 @@ public abstract class AbsPublishTask {
 	}
 
 	/**
-	 * 创建节点在zookeeper上
+	 * 创建父节点以及节点在zookeeper上
 	 * 
 	 * @param zkClient
 	 *            zk客户端对象
@@ -74,5 +76,32 @@ public abstract class AbsPublishTask {
 				throw new RuntimeException(znodePath + "-->节点路径不符合zookeeper约定");
 			}
 		}
+	}
+
+	/**
+	 * 删除节点以及子节点在zookeeper上
+	 * 
+	 * @param zkClient
+	 *            zk客户端对象
+	 * @param znodePath
+	 *            znode路径
+	 * @throws Exception
+	 *             往上层抛异常
+	 */
+	public void deleteZnode(Client zkClient, String znodePath) throws Exception {
+		Stat stat = null;
+		List<String> childNodes = null;
+		// 多份节点检查
+		stat = zkClient.getZooKeeper().exists(znodePath, false);
+		if (null != stat) {
+			childNodes = zkClient.getZooKeeper().getChildren(znodePath, false);
+			if (null != childNodes && childNodes.size() > 0) {
+				for (String childNodePath : childNodes) {
+					zkClient.getZooKeeper().delete(znodePath + "/" + childNodePath, -1);
+				}
+			}
+			zkClient.getZooKeeper().delete(znodePath, stat.getVersion());
+		}
+
 	}
 }

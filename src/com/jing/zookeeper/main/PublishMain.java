@@ -1,7 +1,7 @@
 package com.jing.zookeeper.main;
 
 import com.jing.zookeeper.data.Client;
-import com.jing.zookeeper.publish.PublisherManager;
+import com.jing.zookeeper.publish.PublishManager;
 
 /**
  * @author jingsir
@@ -12,7 +12,7 @@ public class PublishMain {
 
 	public static void main(String[] args) {
 		Client zkClient = new Client();
-		PublisherManager.getInstance().publish(zkClient);
+		PublishManager.getInstance().publish(zkClient);
 	}
 
 }

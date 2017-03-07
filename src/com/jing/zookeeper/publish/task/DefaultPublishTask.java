@@ -35,5 +35,4 @@ public class DefaultPublishTask extends AbsPublishTask {
 			e.printStackTrace();
 		}
 	}
-
 }

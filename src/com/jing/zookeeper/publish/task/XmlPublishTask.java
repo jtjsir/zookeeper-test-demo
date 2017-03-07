@@ -83,5 +83,4 @@ public class XmlPublishTask extends AbsPublishTask {
 			e.printStackTrace();
 		}
 	}
-
 }

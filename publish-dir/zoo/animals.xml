@@ -1,15 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <root>
-	<params name="tiger">
-		<param name="tigerName">Tiger-1</param>
+	<params name="tigers">
+		<param name="tigerName1">Tiger-1</param>
+		<param name="tigerName2">Tiger-2</param>
 	</params>
-	<params name="tiger">
-		<param name="tigerName">Tiger-2</param>
-	</params>
-	<params name="monkey">
-		<param name="monkeyName">Monkey-1</param>
-	</params>
-	<params name="monkey">
-		<param name="monkeyName">Monkey-2</param>
+	<params name="monkeys">
+		<param name="monkeyName1">Monkey-1</param>
+		<param name="monkeyName2">Monkey-2</param>
 	</params>
 </root>
