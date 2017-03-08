@@ -25,7 +25,7 @@ import com.jing.zookeeper.publish.util.ZkNodeUtil;
 /**
  * @author jingsir
  **
- *         初始发布文件到zookeeper
+ *         文件发布/取消发布管理类
  */
 public class PublishManager {
 

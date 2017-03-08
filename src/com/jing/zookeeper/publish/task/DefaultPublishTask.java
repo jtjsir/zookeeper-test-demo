@@ -28,7 +28,7 @@ public class DefaultPublishTask extends AbsPublishTask {
 			for (Map.Entry<String, String> normalFile : defaultEntries) {
 				zkPath = normalFile.getKey();
 				normalValue = normalFile.getValue();
-				ZkNodeUtil.createZnode(zkClient, zkPath, normalValue);
+				ZkNodeUtil.createOrUpdateZnode(zkClient, zkPath, normalValue);
 			}
 
 		} catch (Exception e) {

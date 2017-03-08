@@ -73,7 +73,7 @@ public class XmlPublishTask extends AbsPublishTask {
 					for (Element param : paramList) {
 						String paramKey = param.attributeValue("name");
 						String content = param.getTextTrim();
-						ZkNodeUtil.createZnode(zkClient, zkPath + "/" + paramName + "/" + paramKey, content);
+						ZkNodeUtil.createOrUpdateZnode(zkClient, zkPath + "/" + paramName + "/" + paramKey, content);
 					}
 
 				}

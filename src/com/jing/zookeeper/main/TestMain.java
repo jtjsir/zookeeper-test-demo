@@ -1,12 +1,8 @@
 package com.jing.zookeeper.main;
 
-import org.apache.zookeeper.CreateMode;
-import org.apache.zookeeper.KeeperException;
-import org.apache.zookeeper.Watcher;
-import org.apache.zookeeper.ZooDefs.Ids;
-
 import com.jing.zookeeper.data.Client;
-import com.jing.zookeeper.data.watcher.DataExsitWatcher;
+import com.jing.zookeeper.path.PathVarConst;
+import com.jing.zookeeper.publish.util.ZkNodeUtil;
 
 /**
  * @author jingsir
@@ -16,20 +12,10 @@ import com.jing.zookeeper.data.watcher.DataExsitWatcher;
 public class TestMain {
 
 	public static void main(String[] args) {
-		Client client = new Client();
-		// register watcher
-		Watcher watcher = new DataExsitWatcher();
+		Client zkClient = new Client();
 		try {
-			client.getZooKeeper().exists("/root/config/quote_conf", watcher);
-			client.getZooKeeper().create("/root/config/quote_conf", "quote_conf".getBytes(), Ids.OPEN_ACL_UNSAFE,
-					CreateMode.EPHEMERAL);
-			client.getZooKeeper().exists("/root/config/quote_conf", true);
-			client.getZooKeeper().delete("/root/config/quote_conf", -1);
-			
-			client.getZooKeeper().close();
-		} catch (KeeperException e) {
-			e.printStackTrace();
-		} catch (InterruptedException e) {
+			ZkNodeUtil.deleteZnode(zkClient, PathVarConst.ROOTCONF_PATH + "/" + PathVarConst.PUBLISH_DIRECTORY);
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}

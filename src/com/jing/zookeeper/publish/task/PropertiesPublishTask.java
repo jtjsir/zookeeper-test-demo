@@ -58,7 +58,7 @@ public class PropertiesPublishTask extends AbsPublishTask {
 				proPath = pros.getKey();
 				oneProKeys = pros.getValue().keySet();
 				for (Object proKey : oneProKeys) {
-					ZkNodeUtil.createZnode(zkClient, proPath + "/" + (String) proKey,
+					ZkNodeUtil.createOrUpdateZnode(zkClient, proPath + "/" + (String) proKey,
 							pros.getValue().getProperty((String) proKey));
 				}
 			}
