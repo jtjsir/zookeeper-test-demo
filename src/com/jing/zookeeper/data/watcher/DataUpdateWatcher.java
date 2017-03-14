@@ -1,8 +1,12 @@
 package com.jing.zookeeper.data.watcher;
 
 import org.apache.zookeeper.WatchedEvent;
+import org.apache.zookeeper.Watcher.Event.EventType;
 
 import com.jing.zookeeper.data.Client;
+import com.jing.zookeeper.publish.util.ZkNodeUtil;
+import com.jing.zookeeper.util.ConfigUtil;
+import com.jing.zookeeper.util.StringUtil;
 
 /**
  * @author jingsir
@@ -15,6 +19,8 @@ public class DataUpdateWatcher extends DefaultDataWatcher {
 
 	private String confPath;
 
+	private String nodeType;
+
 	/**
 	 * 
 	 * @param client
@@ -22,16 +28,35 @@ public class DataUpdateWatcher extends DefaultDataWatcher {
 	 * @param confPath
 	 *            配置文件数据存放的路径
 	 */
-	public DataUpdateWatcher(Client client, String confPath) {
+	public DataUpdateWatcher(Client client, String confPath, String nodeType) {
 		this.client = client;
 		this.confPath = confPath;
+		this.nodeType = nodeType;
 	}
 
 	@Override
 	public void process(WatchedEvent event) {
+		EventType eventType = event.getType();
 		try {
-			byte[] data = client.getZooKeeper().getData(this.confPath, null, null);
-			getDefaultLogger().info("将修改的结果输出到日志: " + new String(data));
+			switch (eventType) {
+			case NodeDataChanged:
+				String znodeData = ZkNodeUtil.getNodeValueAsString(confPath, client, 2);
+				if (nodeType.equals("xml")) {
+					ConfigUtil.writeToProperties(znodeData, StringUtil.nodePathToFile(confPath));
+				} else if (nodeType.equals("properties")) {
+					ConfigUtil.writeToXML(znodeData, StringUtil.nodePathToFile(confPath));
+				} else if (nodeType.equals("default")) {
+					ConfigUtil.writeToDefault(znodeData, StringUtil.nodePathToFile(confPath));
+				}
+				getDefaultLogger().info(this.confPath + " 路径在zookeeper上已经被修改");
+				break;
+			case NodeDeleted:
+				ConfigUtil.deleteFile(StringUtil.nodePathToFile(confPath));
+				getDefaultLogger().info(this.confPath + " 路径在zookeeper上已经被删除");
+				break;
+			default:
+				break;
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

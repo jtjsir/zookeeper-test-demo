@@ -6,9 +6,8 @@ import org.apache.zookeeper.CreateMode;
 import org.apache.zookeeper.ZooDefs.Ids;
 import org.apache.zookeeper.data.Stat;
 
-import com.jing.zookeeper.data.watcher.DataExsitWatcher;
 import com.jing.zookeeper.path.PathVarConst;
-import com.jing.zookeeper.util.ProConfigUtil;
+import com.jing.zookeeper.util.ConfigUtil;
 
 /**
  * @author jingsir
@@ -27,14 +26,14 @@ public class MonitorAgentRun implements Runnable {
 	public void run() {
 		try {
 			// 判断根节点是否存在
-			Stat stat = client.getZooKeeper().exists(PathVarConst.ROOT_PATH, new DataExsitWatcher());
+			Stat stat = client.getZooKeeper().exists(PathVarConst.ROOT_PATH, null);
 			if (stat == null) {
 				client.getZooKeeper().create(PathVarConst.ROOT_PATH, "root".getBytes(), Ids.OPEN_ACL_UNSAFE,
 						CreateMode.PERSISTENT);
 				client.getZooKeeper().create(PathVarConst.ROOTCONF_PATH, "config".getBytes(), Ids.OPEN_ACL_UNSAFE,
 						CreateMode.PERSISTENT);
 			} else {
-				String quoteconfData = ProConfigUtil.readPro("com/jing/zookeeper/resource/quote_conf.properties")
+				String quoteconfData = ConfigUtil.readPro("com/jing/zookeeper/resource/quote_conf.properties")
 						.toString();
 				client.getZooKeeper().create(PathVarConst.QUOTECONF_PATH, quoteconfData.getBytes(), Ids.OPEN_ACL_UNSAFE,
 						CreateMode.EPHEMERAL);

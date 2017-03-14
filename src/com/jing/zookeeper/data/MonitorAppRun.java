@@ -20,7 +20,7 @@ public class MonitorAppRun implements Runnable {
 	@Override
 	public void run() {
 		try {
-			Watcher updateWatcher = new DataUpdateWatcher(client, PathVarConst.QUOTECONF_PATH);
+			Watcher updateWatcher = new DataUpdateWatcher(client, PathVarConst.QUOTECONF_PATH, null);
 			while (true) {
 				// 注册数据更新事件
 				if (null != this.client.getZooKeeper().exists(PathVarConst.QUOTECONF_PATH, null)) {

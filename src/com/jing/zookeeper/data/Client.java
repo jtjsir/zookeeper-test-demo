@@ -11,7 +11,6 @@ import org.apache.zookeeper.ZooKeeper;
 import org.apache.zookeeper.ZooDefs.Ids;
 import org.apache.zookeeper.data.Stat;
 
-import com.jing.zookeeper.data.watcher.DataExsitWatcher;
 import com.jing.zookeeper.data.watcher.DefaultDataWatcher;
 import com.jing.zookeeper.path.PathVarConst;
 
@@ -45,7 +44,7 @@ public class Client {
 		loadLocalProperties();
 		try {
 			this.zooKeeper = new ZooKeeper(address, 1000000, new DefaultDataWatcher());
-			Stat stat = this.zooKeeper.exists(PathVarConst.ROOT_PATH, new DataExsitWatcher());
+			Stat stat = this.zooKeeper.exists(PathVarConst.ROOT_PATH, null);
 			if (stat == null) {
 				this.zooKeeper.create(PathVarConst.ROOT_PATH, "root".getBytes(), Ids.OPEN_ACL_UNSAFE,
 						CreateMode.PERSISTENT);
