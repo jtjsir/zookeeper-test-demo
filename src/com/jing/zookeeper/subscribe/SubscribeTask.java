@@ -45,9 +45,13 @@ public class SubscribeTask extends TimerTask {
 			ZkNodeUtil.getAllNodesFromZK(zkClient, PathVarConst.ROOTCONF_PATH);
 			Set<String> nowKeys = new HashSet<>();
 			for (String dir : ZkNodeUtil.allNodesMap.keySet()) {
-				List<String> files = ZkNodeUtil.allNodesMap.get(dir);
-				for (String file : files) {
-					nowKeys.add(dir + "/" + file);
+				if (dir.indexOf(PathVarConst.PATH_KEYWORD[0]) != -1 || dir.indexOf(PathVarConst.PATH_KEYWORD[1]) != -1
+						|| dir.indexOf(PathVarConst.PATH_KEYWORD[2]) != -1) {
+					List<String> files = ZkNodeUtil.allNodesMap.get(dir);
+					for (String file : files) {
+						nowKeys.add(dir + "/" + file);
+					}
+
 				}
 			}
 			// 判断是否为初始化
@@ -103,7 +107,7 @@ public class SubscribeTask extends TimerTask {
 						List<String> childFiles = ZkNodeUtil.allNodesMap.get(keywordChild);
 						for (String childFile : childFiles) {
 							String nodePath = keywordChild + "/" + childFile;
-							zkClient.getZooKeeper().getData(nodePath, exsitWatcherMap.get(nodePath), null);
+							zkClient.getZooKeeper().exists(nodePath, exsitWatcherMap.get(nodePath));
 							zkClient.getZooKeeper().getData(nodePath, updateWatcherMap.get(nodePath), null);
 
 						}

@@ -33,7 +33,7 @@ public class SubscriberManager {
 	public void subscribe(Client zkClient) {
 		Timer subscribeTimer = new Timer();
 		// 1秒后启动，每隔5秒执行一次
-		subscribeTimer.schedule(new SubscribeTask(zkClient), 1000, 5000);
+		subscribeTimer.schedule(new SubscribeTask(zkClient), 1000, 10000);
 	}
 
 	public static void main(String[] args) {

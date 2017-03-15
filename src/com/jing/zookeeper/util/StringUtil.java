@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import com.jing.zookeeper.path.PathVarConst;
 
@@ -38,7 +39,11 @@ public class StringUtil {
 				dirKeyName = nodePath.substring(PathVarConst.ROOTCONF_PATH.length() + 1, keyIndex - 1);
 				// 获取文件名
 				int subIndex = nodePath.lastIndexOf("/");
-				fileName = nodePath.substring(subIndex + 1, nodePath.length()) + "." + keyword;
+				if (!keyword.equals("default")) {
+					fileName = nodePath.substring(subIndex + 1, nodePath.length()) + "." + keyword;
+				} else {
+					fileName = nodePath.substring(subIndex + 1, nodePath.length());
+				}
 			}
 		}
 
@@ -48,7 +53,8 @@ public class StringUtil {
 
 		List<String> filesList = localFilesMap.get(dirKeyName);
 		for (String file : filesList) {
-			if (file.indexOf(fileName) != -1) {
+			String simpleName = file.substring(file.lastIndexOf("/") + 1, file.length());
+			if (simpleName.indexOf(fileName) != -1 || simpleName.equals(fileName)) {
 				filefullPath = file;
 			}
 		}
@@ -88,7 +94,31 @@ public class StringUtil {
 		}
 	}
 
+	// 将新增的zk节点转为本地存储地址
+	public static String parsePathToLocal(String zpath) {
+		String fullPath = null;
+		try {
+			String preffix = zpath.substring(
+					zpath.indexOf(PathVarConst.PUBLISH_DIRECTORY) + PathVarConst.PUBLISH_DIRECTORY.length() + 1);
+			for (String alias : PathVarConst.PATH_KEYWORD) {
+				if (preffix.indexOf(alias) != -1) {
+					String nodeType = alias;
+					if (alias.equals("default")) {
+						nodeType = "txt";
+					}
+					fullPath = new File(
+							PathVarConst.PUBLISH_DIRECTORY + "/" + preffix.replace(alias + "/", "") + "." + nodeType)
+									.getCanonicalPath();
+					break;
+				}
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return fullPath;
+	}
+
 	public static void main(String[] args) {
-		System.err.println(StringUtil.nodePathToFile("/root/config/publish-dir/keeper/xml/zooKeepers"));
+		System.err.println(StringUtil.parsePathToLocal("/root/config/publish-dir/keeper/test/xml/test"));
 	}
 }
